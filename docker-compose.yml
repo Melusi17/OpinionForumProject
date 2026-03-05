@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: opinion-forum-postgres
+    environment:
+      POSTGRES_DB: ForumDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 17Melusi
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - opinion-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  opinionforum:
+    build:
+      context: ./Opinion Forum
+      dockerfile: Dockerfile
+    container_name: opinion-forum-backend
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=ForumDb;Username=postgres;Password=17Melusi
+      Jwt__Key: MySuperSecretKeyForSkillDemonstrationPurposesOnly2026!
+    ports:
+      - "5000:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - opinion-network
+
+
+  frontend:
+    build:
+      context: ./opinion-forum-frontend
+      dockerfile: Dockerfile
+    container_name: opinion-forum-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - opinionforum
+    networks:
+      - opinion-network
+
+
+networks:
+  opinion-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
