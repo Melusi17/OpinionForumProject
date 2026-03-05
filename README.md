@@ -1,70 +1,215 @@
-# Getting Started with Create React App
+Good catch! Here's the updated README without the `.env` file reference:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Opinion Forum - Full Stack Application
 
-## Available Scripts
+A full-stack forum application built with ASP.NET Core Web API, React, PostgreSQL, and Docker. Features JWT authentication and a responsive UI.
 
-In the project directory, you can run:
+## 🚀 Tech Stack
 
-### `npm start`
+### Backend
+- **ASP.NET Core 8.0** - Web API framework
+- **Entity Framework Core** - ORM for database operations
+- **PostgreSQL** - Primary database
+- **JWT Authentication** - Secure token-based auth
+- **Swagger/OpenAPI** - API documentation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Frontend
+- **React 19** - UI library
+- **React Router DOM** - Navigation and routing
+- **Axios** - HTTP client for API requests
+- **React Hook Form** - Form handling and validation
+- **CSS Modules** - Styling
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### DevOps
+- **Docker** - Containerization
+- **Docker Compose** - Multi-container orchestration
+- **Nginx** - Reverse proxy for frontend
 
-### `npm test`
+## 📋 Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Node.js](https://nodejs.org/) (v18 or higher) - for local development
+- [.NET SDK 8.0](https://dotnet.microsoft.com/download) - for local development
+- [Git](https://git-scm.com/)
 
-### `npm run build`
+## 🏗️ Project Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+OpinionForumProject/
+├── Opinion Forum/           # ASP.NET Core Backend
+│   ├── Controllers/         # API endpoints
+│   ├── Data/               # Database context
+│   ├── Models/             # Entity models
+│   ├── Services/           # Business logic
+│   └── Dockerfile          # Backend container config
+├── opinion-forum-frontend/  # React Frontend
+│   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── context/        # Auth context
+│   │   ├── pages/          # Page components
+│   │   └── services/       # API services
+│   ├── public/             # Static files
+│   ├── Dockerfile          # Frontend container config
+│   └── nginx.conf          # Nginx configuration
+├── docker-compose.yml       # Multi-container setup
+└── docker-compose.override.yml # Development overrides
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🚦 Getting Started
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Using Docker (Recommended)
 
-### `npm run eject`
+1. **Clone the repository**
+```bash
+git clone https://github.com/Melusi17/OpinionForumProject.git
+cd OpinionForumProject
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Start the application with Docker Compose**
+```bash
+docker-compose up -d
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Access the applications**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5000/swagger
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Local Development Setup
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### Backend Setup
+```bash
+cd "Opinion Forum"
+dotnet restore
+dotnet run
+```
+API will be available at `https://localhost:7011` and `http://localhost:5187`
 
-## Learn More
+#### Frontend Setup
+```bash
+cd opinion-forum-frontend
+npm install
+npm start
+```
+Frontend will be available at `http://localhost:3000`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🔑 API Endpoints
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Authentication
 
-### Code Splitting
+| Method | Endpoint | Description | Request Body |
+|--------|----------|-------------|--------------|
+| POST | `/api/Auth/register` | Register new user | `{ firstName, lastName, email, password }` |
+| POST | `/api/Auth/login` | Login user | `{ email, password }` |
+| GET | `/api/User/me` | Get current user | Requires JWT token |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🐳 Docker Commands
 
-### Analyzing the Bundle Size
+### Build and start all services
+```bash
+docker-compose up -d
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### View running containers
+```bash
+docker ps
+```
 
-### Making a Progressive Web App
+### View logs
+```bash
+docker-compose logs -f [service-name]
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Stop all services
+```bash
+docker-compose down
+```
 
-### Advanced Configuration
+### Rebuild a specific service
+```bash
+docker-compose build [service-name]
+docker-compose up -d [service-name]
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🧪 Running Tests
 
-### Deployment
+### Backend Tests
+```bash
+cd "Opinion Forum"
+dotnet test
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Frontend Tests
+```bash
+cd opinion-forum-frontend
+npm test
+```
 
-### `npm run build` fails to minify
+## 🌐 Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Backend (`appsettings.json`)
+The API uses the following configuration:
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=postgres;Port=5432;Database=ForumDb;Username=postgres;Password=17Melusi"
+  },
+  "Jwt": {
+    "Key": "MySuperSecretKeyForSkillDemonstrationPurposesOnly2026!",
+    "Issuer": "OpinionForum",
+    "Audience": "OpinionForumUsers"
+  }
+}
+```
+
+### Frontend API Configuration
+The React app connects to the backend using a base URL configured in `src/services/api.js`:
+```javascript
+const API_URL = 'http://localhost:5000/api';
+```
+
+## 📝 Features Implemented
+
+- ✅ User registration with validation
+- ✅ User login with JWT authentication
+- ✅ Protected user details page
+- ✅ PostgreSQL database integration
+- ✅ Full Docker containerization
+- ✅ Nginx reverse proxy for frontend
+- ✅ Responsive design
+- ✅ Form validation
+- ✅ Error handling
+
+## 🔒 Environment Variables Note
+
+This project does not use `.env` files. All configuration is handled through:
+- `appsettings.json` for backend
+- Direct configuration in `api.js` for frontend
+- Docker Compose environment variables for container setup
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👨‍💻 Author
+
+**Melusi Mamba**
+- GitHub: [@Melusi17](https://github.com/Melusi17)
+
+## 🙏 Acknowledgments
+
+- ASP.NET Core documentation
+- React documentation
+- Docker documentation
+- PostgreSQL community
+
+---
+
+**Happy Coding!** 🚀
