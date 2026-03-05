@@ -1,5 +1,3 @@
-Good catch! Here's the updated README without the `.env` file reference:
-
 # Opinion Forum - Full Stack Application
 
 A full-stack forum application built with ASP.NET Core Web API, React, PostgreSQL, and Docker. Features JWT authentication and a responsive UI.
@@ -210,6 +208,4 @@ This project is licensed under the MIT License.
 - Docker documentation
 - PostgreSQL community
 
----
 
-**Happy Coding!** 🚀
